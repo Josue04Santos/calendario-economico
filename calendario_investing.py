@@ -376,9 +376,15 @@ class App(ttk.Window):
             self.qr_photo = ImageTk.PhotoImage(qr_img)
             ttk.Label(qr_frame, image=self.qr_photo).pack(pady=10)
         ttk.Label(qr_frame, text="Apoie o desenvolvedor!", font="-weight bold").pack()
-        social_frame = ttk.Frame(qr_frame); social_frame.pack(pady=15)
-        self._create_social_button(social_frame, "linkedin.png", "https://www.linkedin.com/in/josue-p-santos" ).pack(side=LEFT, padx=10)
-        self._create_social_button(social_frame, "instagram.png", "https://www.instagram.com/josuepsantos" ).pack(side=RIGHT, padx=10)
+        
+        social_frame = ttk.Frame(qr_frame)
+        social_frame.pack(pady=15)
+        social_frame.columnconfigure((0, 1, 2), weight=1)
+
+        self._create_social_button(social_frame, "linkedin.png", "https://www.linkedin.com/in/josue-p-santos" ).grid(row=0, column=0, padx=5)
+        self._create_social_button(social_frame, "github-mark.png", "https://github.com/Josue04Santos" ).grid(row=0, column=1, padx=5)
+        self._create_social_button(social_frame, "instagram.png", "https://www.instagram.com/josuepsantos" ).grid(row=0, column=2, padx=5)
+        
         logo_path = self.config.IMAGE_DIR / "AJJ_LogoColorido.png"
         if logo_path.exists():
             try:
@@ -407,9 +413,13 @@ class App(ttk.Window):
 
     def _create_social_button(self, parent, image_name, url):
         path = self.config.IMAGE_DIR / image_name
-        if not path.exists(): return ttk.Frame(parent)
+        if not path.exists(): 
+            logging.warning(f"Ícone social não encontrado: {image_name}")
+            return ttk.Frame(parent)
+        
         icon_img = Image.open(path).resize((32, 32), Image.Resampling.LANCZOS)
         icon_photo = ImageTk.PhotoImage(icon_img)
+        
         button = ttk.Button(parent, image=icon_photo, bootstyle="link", command=lambda: webbrowser.open(url))
         button.image = icon_photo
         return button
