@@ -1,0 +1,18 @@
+# Ambiente Virtual do Python
+venv/
+__pycache__/
+*.pyc
+
+# Arquivos gerados pelo PyInstaller
+build/
+dist/
+*.spec
+
+# Arquivos de configuração de IDEs
+.vscode/
+.idea/
+
+# Arquivos de log e de dados do usuário
+*.log
+*.csv
+*.json
