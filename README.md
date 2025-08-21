@@ -49,7 +49,7 @@ Um aplicativo de desktop robusto e intuitivo, projetado para traders e investido
 
 1.  **Baixe o Executável:**
     *   Vá para a [**página de Releases**](https://github.com/Josue04Santos/calendario-economico/releases ).
-    *   Clique na versão mais recente (ex: `v1.0.1`).
+    *   Clique na versão mais recente (ex: `v1.1.0`).
     *   Na seção **Assets**, baixe o arquivo `CalendarioEconomico.exe`.
 
 2.  **Execute o Aplicativo:**
