@@ -390,7 +390,7 @@ class App(ttk.Window):
         logo_path = self.config.IMAGE_DIR / "AJJ_LogoColorido.png"
         if logo_path.exists():
             try:
-                logo_img = Image.open(logo_path).resize((150, 75), Image.Resampling.LANCZOS)
+                logo_img = Image.open(logo_path).resize((150, 120), Image.Resampling.LANCZOS)
                 self.logo_photo = ImageTk.PhotoImage(logo_img)
                 ttk.Label(qr_frame, image=self.logo_photo).pack(pady=(10, 0))
             except Exception as e:
