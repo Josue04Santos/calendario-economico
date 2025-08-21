@@ -214,16 +214,21 @@ class AlertService:
 
 # --- MUDANÇA: Classe TaskScheduler agora gerencia duas tarefas ---
 class TaskScheduler:
-    """Gerencia as tarefas agendadas no Windows."""
+    """Gerencia as tarefas agendadas no Windows, sem exibir janelas de console."""
     def __init__(self, config, exe_path):
         self.config = config
         # Adiciona o argumento para que as tarefas rodem em modo silencioso
         self.exe_path_with_arg = f'"{exe_path}" --background-update'
+        
+        # --- CORREÇÃO: Adiciona a flag para ocultar a janela do console ---
+        # Este valor será usado em todas as chamadas de subprocess
+        self.creation_flags = subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0
 
     def _create_task(self, task_name, schedule_type, time=""):
         """Função genérica para criar uma tarefa."""
         query_cmd = ['schtasks', '/Query', '/TN', task_name]
-        if subprocess.run(query_cmd, capture_output=True).returncode == 0:
+        # --- CORREÇÃO: Adiciona creationflags à chamada ---
+        if subprocess.run(query_cmd, capture_output=True, creationflags=self.creation_flags).returncode == 0:
             logging.info(f"Tarefa '{task_name}' já existe.")
             return
 
@@ -238,7 +243,8 @@ class TaskScheduler:
             create_cmd.extend(['/ST', time])
         
         try:
-            subprocess.run(create_cmd, check=True, capture_output=True, text=True)
+            # --- CORREÇÃO: Adiciona creationflags à chamada ---
+            subprocess.run(create_cmd, check=True, capture_output=True, text=True, creationflags=self.creation_flags)
             logging.info(f"Tarefa '{task_name}' criada com sucesso.")
         except subprocess.CalledProcessError as e:
             logging.error(f"Falha ao criar tarefa '{task_name}': {e.stderr}")
@@ -248,7 +254,8 @@ class TaskScheduler:
         logging.info(f"Deletando tarefa agendada '{task_name}'...")
         delete_cmd = ['schtasks', '/Delete', '/TN', task_name, '/F']
         try:
-            subprocess.run(delete_cmd, check=True, capture_output=True, text=True)
+            # --- CORREÇÃO: Adiciona creationflags à chamada ---
+            subprocess.run(delete_cmd, check=True, capture_output=True, text=True, creationflags=self.creation_flags)
             logging.info(f"Tarefa '{task_name}' deletada com sucesso.")
         except subprocess.CalledProcessError as e:
             if "não foi possível encontrar" in e.stderr.lower():
@@ -265,6 +272,7 @@ class TaskScheduler:
         """Deleta ambas as tarefas de atualização."""
         self._delete_task(self.config.TASK_NAME_LOGON)
         self._delete_task(self.config.TASK_NAME_DAILY)
+
 
 
 # ================== 3. INTERFACE GRÁFICA (UI) ==================

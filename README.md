@@ -1,6 +1,6 @@
 # 🔔 Notificador de Calendário Econômico Investing para Windows
 
-![Versão](https://img.shields.io/badge/version-v1.1.0-blue )
+![Versão](https://img.shields.io/badge/version-v1.1.1-blue )
 ![Licença](https://img.shields.io/badge/license-MIT-green )
 ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white )
 
