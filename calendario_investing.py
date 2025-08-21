@@ -385,7 +385,7 @@ class App(ttk.Window):
         social_frame.pack(pady=15)
         social_frame.columnconfigure((0, 1, 2), weight=1)
         self._create_social_button(social_frame, "linkedin.png", "https://www.linkedin.com/in/josue-p-santos" ).grid(row=0, column=0, padx=5)
-        self._create_social_button(social_frame, "github.png", "https://github.com/Josue04Santos" ).grid(row=0, column=1, padx=5)
+        self._create_social_button(social_frame, "github-mark.png", "https://github.com/Josue04Santos" ).grid(row=0, column=1, padx=5)
         self._create_social_button(social_frame, "instagram.png", "https://www.instagram.com/josuepsantos" ).grid(row=0, column=2, padx=5)
         logo_path = self.config.IMAGE_DIR / "AJJ_LogoColorido.png"
         if logo_path.exists():
